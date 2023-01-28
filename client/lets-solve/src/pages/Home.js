@@ -1,15 +1,18 @@
 import { Box, Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Filtersnavbar from '../Components/Filtersnavbar'
 import Navbar from '../Components/Navbar'
 import Singlequestion from '../Components/Singlequestion'
+import { Context } from '../Context/Context'
+
 
 const Home = () => {
 
-    const [data,setdata] =useState([]);
+    // const [data,setdata] =useState([]);
+    let {data,setdata}= useContext(Context)
 
     const fetchData=async ()=>{
-        let res= await fetch('http://localhost:3005/questions')
+        let res= await fetch('http://localhost:500/questions')
         let data= await res.json();
         console.log(data)
         setdata(data)
@@ -41,7 +44,7 @@ const Home = () => {
                         </Thead>
                         <Tbody>
                             {
-                                data.map((ele)=>{return <Singlequestion data={ele}/>})
+                                data.map((ele,index)=>{return <Singlequestion key={ele.id} data={ele}/>})
                             }
                         </Tbody>
                     </Table>
